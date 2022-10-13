@@ -25,11 +25,11 @@ class SocketObservable(val mConfig: SocketConfig, val mSocket: Socket) : Observa
         Thread(Runnable {
             try {
                 mSocket.connect(InetSocketAddress(mConfig.mIp, mConfig.mPort ?: 1080), mConfig.mTimeout ?: 0)
-                observer?.onNext(DataWrapper(SocketState.OPEN, ByteArray(0)))
+                observer?.onNext(DataWrapper(SocketState.CONNECTED, ByteArray(0)))
                 mReadThread.start()
             } catch (e: IOException) {
                 println(e.toString())
-                observer?.onNext(DataWrapper(SocketState.CLOSE, ByteArray(0)))
+                observer?.onNext(DataWrapper(SocketState.FAILCONNECTED, ByteArray(0)))
             }
         }).start()
     }
@@ -46,7 +46,7 @@ class SocketObservable(val mConfig: SocketConfig, val mSocket: Socket) : Observa
 
         fun onNext(data: ByteArray) {
             if (mSocket.isConnected) {
-                observer?.onNext(DataWrapper(SocketState.CONNECTING, data))
+                observer?.onNext(DataWrapper(SocketState.GETDATA, data))
             }
         }
 
@@ -60,7 +60,7 @@ class SocketObservable(val mConfig: SocketConfig, val mSocket: Socket) : Observa
             mReadThread.interrupt()
             mHeartBeatRef?.dispose()
             mSocket.close()
-            observer?.onNext(DataWrapper(SocketState.CLOSE, ByteArray(0)))
+            observer?.onNext(DataWrapper(SocketState.DISCONNECTED, ByteArray(0)))
         }
 
         override fun isDisposed(): Boolean {

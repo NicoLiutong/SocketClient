@@ -8,11 +8,14 @@ abstract class SocketSubscriber : Consumer<DataWrapper>{
 
     override fun accept(t: DataWrapper) {
         when (t.state) {
-            SocketState.CONNECTING -> onResponse(t.data)
-            SocketState.OPEN -> onConnected()
-            SocketState.CLOSE -> onDisconnected()
+            SocketState.GETDATA -> onResponse(t.data)
+            SocketState.CONNECTED -> onConnected()
+            SocketState.DISCONNECTED -> onDisconnected()
+            SocketState.FAILCONNECTED -> onFailConnected()
         }
     }
+
+    abstract fun onFailConnected()
 
     abstract fun onConnected()
 
