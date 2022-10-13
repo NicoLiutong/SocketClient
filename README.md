@@ -20,12 +20,12 @@ Step 1. Add the JitPack repository to your build file
 Step 2. Add the dependency
 
 	dependencies {
-	        compile 'com.github.NicoLiutong:SocketClient:v1.0.1'
+	        compile 'com.github.NicoLiutong:SocketClient:v1.0.2'
 	}
 	
 ### init
 ```java
-SocketClient mClient = RxSocketClient
+SocketClient mClient = CreatSocketClient
         .create(new SocketConfig.Builder()
                 .setIp(IP)
                 .setPort(PORT)
