@@ -20,7 +20,7 @@ Step 1. Add the JitPack repository to your build file
 Step 2. Add the dependency
 
 	dependencies {
-	        implementation 'com.github.NicoLiutong:SocketClient:v1.0.3'
+	        implementation 'com.github.NicoLiutong:SocketClient:v1.0.6'
 	}
 	
 ### init
